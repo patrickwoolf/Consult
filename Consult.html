@@ -76,7 +76,7 @@
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
-      <option value="4">4</option>
+      <option value="4" selected>4</option>
     </select>
     M<select id="mScore">
       <option value="1">1</option>
@@ -84,14 +84,14 @@
       <option value="3">3</option>
       <option value="4">4</option>
       <option value="5">5</option>
-      <option value="6">6</option>
+      <option value="6" selected>6</option>
     </select>
     V<select id="vScore">
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
       <option value="4">4</option>
-      <option value="5">5</option>
+      <option value="5" selected>5</option>
     </select>,
     <select id="consciousnessStatus">
       <option value="clear">Clear</option>
@@ -220,16 +220,20 @@
   <h2>Motor Status</h2>
   <label>
     Brunnstrom stage:
-    RUE proximal
-    <select id="brunnstromRUEProximal">
+    <select id="side">
+      <option value="R">R</option>
+      <option value="L">L</option>
+    </select>
+    UE proximal
+    <select id="brunnstromUEProximal">
       <option value="I">I</option>
       <option value="II">II</option>
       <option value="III">III</option>
       <option value="IV">IV</option>
       <option value="V">V</option>
     </select>
-    / RUE distal
-    <select id="brunnstromRUEDistal">
+    / UE distal
+    <select id="brunnstromUEDistal">
       <option value="I">I</option>
       <option value="II">II</option>
       <option value="III">III</option>
@@ -248,7 +252,9 @@
 
   <label>
     Muscle power:
-    RUE proximal
+  </label>
+  <label>
+    &nbsp&nbspRUE proximal
     <select id="musclePowerRUEProximal">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -264,16 +270,51 @@
       <option value="4">4</option>
       <option value="5">5</option>
     </select>
-    / LUE
-    <select id="musclePowerLUE">
+    / RLE proximal
+    <select id="musclePowerRLEProximal">
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
       <option value="4">4</option>
       <option value="5">5</option>
     </select>
-    / LLE
-    <select id="musclePowerLLE">
+    / RLE distal
+    <select id="musclePowerRLEDistal">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </label>
+  
+  <label>
+    &nbsp&nbspLUE proximal
+    <select id="musclePowerLUEProximal">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    / LUE distal
+    <select id="musclePowerLUEDistal">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    / LLE proximal
+    <select id="musclePowerLLEProximal">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    / LLE distal
+    <select id="musclePowerLLEDistal">
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -440,14 +481,19 @@
       .map(option => option.value)
       .join(', ');
 
-    const brunnstromRUEProximal = document.getElementById('brunnstromRUEProximal').value;
-    const brunnstromRUEDistal = document.getElementById('brunnstromRUEDistal').value;
+    const side = document.getElementById('side').value;
+    const brunnstromUEProximal = document.getElementById('brunnstromUEProximal').value;
+    const brunnstromUEDistal = document.getElementById('brunnstromUEDistal').value;
     const brunnstromLE = document.getElementById('brunnstromLE').value;
 
     const musclePowerRUEProximal = document.getElementById('musclePowerRUEProximal').value;
     const musclePowerRUEDistal = document.getElementById('musclePowerRUEDistal').value;
-    const musclePowerLUE = document.getElementById('musclePowerLUE').value;
-    const musclePowerLLE = document.getElementById('musclePowerLLE').value;
+    const musclePowerRLEProximal = document.getElementById('musclePowerRLEProximal').value;
+    const musclePowerRLEDistal = document.getElementById('musclePowerRLEDistal').value;
+    const musclePowerLUEProximal = document.getElementById('musclePowerLUEProximal').value;
+    const musclePowerLUEDistal = document.getElementById('musclePowerLUEDistal').value;
+    const musclePowerLLEProximal = document.getElementById('musclePowerLLEProximal').value;
+    const musclePowerLLEDistal = document.getElementById('musclePowerLLEDistal').value;
 
     const dtrRUE = document.getElementById('dtrRUE').value;
     const dtrRLE = document.getElementById('dtrRLE').value;
@@ -465,11 +511,8 @@
     const ambulationAssistanceFunc = document.getElementById('ambulationAssistanceFunc').value;
     const gait = document.getElementById('gait').value;
     const badlsFunc = document.getElementById('badlsFunc').value;
-    
 
-    // Include other variables and their selected values
 
-    // Example format, modify as needed
     return `[Premorbid Status]
 Ambulation: ${ambulationType} ambulation ${ambulationDevice} device ${ambulationAssistance} assistance,
 BADLs: ${badls}
@@ -492,8 +535,10 @@ Clear water test (3-ml):
 Impaired in CN: ${impairedCranialNerves}
 
 [Motor Status]
-Brunnstrom stage: RUE proximal ${brunnstromRUEProximal} / RUE distal ${brunnstromRUEDistal} / LE ${brunnstromLE}
-Muscle power: RUE proximal ${musclePowerRUEProximal} / RUE distal ${musclePowerRUEDistal} / LUE ${musclePowerLUE} / LLE ${musclePowerLLE}
+Brunnstrom stage: ${side}UE proximal ${brunnstromUEProximal} / UE distal ${brunnstromUEDistal} / LE ${brunnstromLE}
+Muscle power:
+  RUE proximal/distal ${musclePowerRUEProximal}/${musclePowerRUEDistal}, RLE proximal/distal ${musclePowerRLEProximal}/${musclePowerRLEDistal} 
+  LUE proximal/distal ${musclePowerLUEProximal}/${musclePowerLUEDistal}, LLE proximal/distal ${musclePowerLLEProximal}/${musclePowerLLEDistal}
 DTR: RUE ${dtrRUE} / RLE ${dtrRLE} / LUE ${dtrLUE} / LLE ${dtrLLE}
 Spasticity (MAS): ${spasticity}
 Sensation: ${sensation} to light touch, pain stimuli
