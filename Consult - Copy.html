@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Information and Examination</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Premorbid Status</h2>
+  <label>
+    Ambulation:
+    <select id="ambulationType">
+      <option value="community">Community</option>
+      <option value="household">Household</option>
+    </select>
+    ambulation
+    <select id="ambulationDevice">
+      <option value="with">with</option>
+      <option value="without">without</option>
+    </select>
+    device
+    <select id="ambulationAssistance">
+      <option value="with">with</option>
+      <option value="without">without</option>
+    </select>
+    assistance
+  </label>
+
+  <label>
+    BADLs:
+    <select id="badls">
+      <option value="independent">Totally Independent</option>
+      <option value="partial">Partially Independent</option>
+      <option value="dependent">Dependent</option>
+    </select>
+  </label>
+
+  <label>
+    Living environment:
+    <select id="livingEnvironment">
+      <option value="1">1F</option>
+      <option value="2">2F</option>
+      <option value="3+">3+F</option>
+    </select>
+    Elevator:
+    <select id="elevator">
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+  </label>
+
+  <h2>Physical Examination</h2>
+  <!-- Add more interactive elements as needed -->
+
+  <button onclick="copyToClipboard()">Copy to Pasteboard</button>
+</div>
+
+<script>
+  function copyToClipboard() {
+    const textarea = document.createElement('textarea');
+    const textToCopy = generateText();
+    
+    textarea.value = textToCopy;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    alert('Text copied to clipboard:\n' + textToCopy);
+  }
+
+  function generateText() {
+    // Modify this function to include all selected options
+    const ambulationType = document.getElementById('ambulationType').value;
+    const ambulationDevice = document.getElementById('ambulationDevice').value;
+    const ambulationAssistance = document.getElementById('ambulationAssistance').value;
+    const badls = document.getElementById('badls').value;
+    const livingEnvironment = document.getElementById('livingEnvironment').value;
+    const elevator = document.getElementById('elevator').value;
+
+    // Include other variables and their selected values
+
+    // Example format, modify as needed
+    return `[Premorbid Status]
+Ambulation: ${ambulationType} ambulation ${ambulationDevice} device ${ambulationAssistance} assistance,
+BADLs: ${badls}
+Living environment: ${livingEnvironment}F, elevator: ${elevator}
+
+[Physical Examination]
+<!-- ... (Previous code remains unchanged) ... -->
+
+<label>
+  Consciousness:
+  E<select id="eScore">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+  M<select id="mScore">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+  </select>
+  V<select id="vScore">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>,
+  <select id="consciousnessStatus">
+    <option value="clear">Clear</option>
+    <option value="disoriented">Disoriented</option>
+  </select>
+</label>
+
+<label>
+  General appearance:
+  <select id="generalAppearance">
+    <option value="fairSpirit">Fair Spirit</option>
+    <option value="illLooking">Ill Looking</option>
+  </select>
+</label>]
+
+<h2>Speech</h2>
+<label>
+  Speech:
+  <select id="speechFluency">
+    <option value="fluent">Fluent</option>
+    <option value="nonfluent">Nonfluent</option>
+  </select>
+  Repetition
+  <select id="repetition">
+    <option value="intact">Intact</option>
+    <option value="impaired">Impaired</option>
+  </select>
+  Comprehension
+  <select id="comprehension">
+    <option value="intact">Intact</option>
+    <option value="impaired">Impaired</option>
+  </select>
+  Dysarthria
+  <select id="dysarthria">
+    <option value="+">+</option>
+    <option value="-">-</option>
+  </select>
+  Aphasia
+  <select id="aphasia">
+    <option value="+">+</option>
+    <option value="-">-</option>
+  </select>
+</label>
+
+<!-- Add other sections similarly -->
+
+<!-- ... (Previous code remains unchanged) ... -->
+
+
+
+[Functional Status]
+// Add other sections`;
+  }
+</script>
+
+</body>
+</html>
