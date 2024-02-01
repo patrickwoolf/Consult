@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Website Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        select, input {
+            margin-top: 5px;
+        }
+
+        #resultContainer {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dynamic Website Generator</h1>
+
+    <form id="dynamicForm">
+        <div id="dynamicContent"></div>
+
+        <button type="button" onclick="addFormGroup()">Add Form Group</button>
+        <button type="button" onclick="generateResult()">Generate Result</button>
+        <button type="button" onclick="copyResult()">Copy Result</button>
+        <button type="button" onclick="generateTXT()">Generate TXT</button>
+    </form>
+
+    <div id="resultContainer"></div>
+
+    <script>
+        function addFormGroup() {
+            const dynamicContent = document.getElementById('dynamicContent');
+            const formGroup = document.createElement('div');
+            formGroup.classList.add('form-group');
+
+            const label = document.createElement('label');
+            label.textContent = 'Enter your content:';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'Type here...';
+
+            formGroup.appendChild(label);
+            formGroup.appendChild(input);
+
+            dynamicContent.appendChild(formGroup);
+        }
+
+        function generateResult() {
+            const dynamicContent = document.getElementById('dynamicContent');
+            const formGroups = dynamicContent.getElementsByClassName('form-group');
+
+            const resultContainer = document.getElementById('resultContainer');
+
+            // Clear previous content
+            resultContainer.innerHTML = '';
+
+            let selectCounter = 0; // Counter to ensure unique select IDs
+
+            for (const formGroup of formGroups) {
+                const userInput = formGroup.querySelector('input').value;
+
+                // Regex to match content like "{a,b}" and capture the options inside the curly braces
+                const matches = userInput.match(/(.*)\{(.+?)\}(.*)/);
+
+                if (matches) {
+                    const outsideStringBefore = matches[1];
+                    const options = matches[2].split(',').map(option => option.trim());
+                    const outsideStringAfter = matches[3];
+
+                    // Create a new select element
+                    const selectElement = document.createElement('select');
+                    
+                    // Set the unique ID for each select element
+                    selectElement.id = 'select' + selectCounter++;
+
+                    for (const option of options) {
+                        // Create option elements and set the text content
+                        const optionElement = document.createElement('option');
+                        optionElement.textContent = option;
+
+                        // Set the ID attribute for each option
+                        optionElement.id = option.replace(/\s+/g, ' '); // Remove spaces and set as id
+
+                        // Append the option element to the select element
+                        selectElement.appendChild(optionElement);
+                    }
+
+                    // Generate formatted content with the select element and outside strings
+                    const formattedContent = `${outsideStringBefore} ${selectElement.outerHTML} ${outsideStringAfter}`;
+
+                    // Create a new paragraph element
+                    const contentElement = document.createElement('p');
+
+                    // Set the inner HTML of the paragraph element with the formatted content
+                    contentElement.innerHTML = formattedContent;
+
+                    // Append the paragraph element to the result container
+                    resultContainer.appendChild(contentElement);
+                }
+            }
+        }
+
+
+
+        <!-- function generateResult() { -->
+            <!-- const dynamicContent = document.getElementById('dynamicContent'); -->
+            <!-- const formGroups = dynamicContent.getElementsByClassName('form-group'); -->
+
+            <!-- const resultContainer = document.getElementById('resultContainer'); -->
+
+            <!-- // Clear previous content -->
+            <!-- resultContainer.innerHTML = ''; -->
+
+            <!-- for (const formGroup of formGroups) { -->
+                <!-- const userInput = formGroup.querySelector('input').value; -->
+                <!-- const selectElement = formGroup.querySelector('select'); -->
+                <!-- const selectedValue = selectElement ? selectElement.value : ''; -->
+                <!-- const formattedContent = formatContent(userInput, selectedValue); -->
+
+                <!-- const contentElement = document.createElement('p'); -->
+                <!-- contentElement.innerHTML = formattedContent; -->
+
+                <!-- resultContainer.appendChild(contentElement); -->
+            <!-- } -->
+        <!-- } -->
+
+
+        <!-- function generateResult() { -->
+            <!-- const dynamicContent = document.getElementById('dynamicContent'); -->
+            <!-- const formGroups = dynamicContent.getElementsByClassName('form-group'); -->
+
+            <!-- const resultContainer = document.getElementById('resultContainer'); -->
+
+            <!-- // Clear previous content -->
+            <!-- resultContainer.innerHTML = ''; -->
+
+            <!-- for (const formGroup of formGroups) { -->
+                <!-- const userInput = formGroup.querySelector('input').value; -->
+                <!-- const formattedContent = formatContent(userInput); -->
+
+                <!-- const contentElement = document.createElement('p'); -->
+                <!-- contentElement.innerHTML = formattedContent; -->
+
+                <!-- resultContainer.appendChild(contentElement); -->
+            <!-- } -->
+        <!-- } -->
+
+        <!-- function copyResult() { -->
+            <!-- const resultContainer = document.getElementById('resultContainer'); -->
+            <!-- const contentElements = resultContainer.getElementsByTagName('p'); -->
+
+            <!-- if (contentElements.length > 0) { -->
+                <!-- let copiedContent = ''; -->
+
+                <!-- for (const contentElement of contentElements) { -->
+                    <!-- copiedContent += contentElement.innerText + '\n'; -->
+                <!-- } -->
+
+                <!-- // Remove the last newline character -->
+                <!-- copiedContent = copiedContent.slice(0, -1); -->
+
+                <!-- const tempTextArea = document.createElement('textarea'); -->
+                <!-- tempTextArea.innerHTML = copiedContent; -->
+                <!-- document.body.appendChild(tempTextArea); -->
+                <!-- tempTextArea.select(); -->
+                <!-- document.execCommand('copy'); -->
+                <!-- document.body.removeChild(tempTextArea); -->
+
+                <!-- alert('Result copied to clipboard!\n' + copiedContent); -->
+            <!-- } else { -->
+                <!-- alert('No result to copy!'); -->
+            <!-- } -->
+        <!-- } -->
+
+        function copyResult() {
+            const resultContainer = document.getElementById('resultContainer');
+            const paragraphs = resultContainer.getElementsByTagName('p');
+            let copiedContent = '';
+
+            for (const paragraph of paragraphs) {
+                const outsideStringBefore = paragraph.firstChild.nodeValue; // Get the text before the <select>
+                const selectElement = paragraph.querySelector('select');
+                const outsideStringAfter = paragraph.lastChild.nodeValue; // Get the text after the <select>
+
+                if (selectElement) {
+                    const selectedOption = selectElement.options[selectElement.selectedIndex];
+                    const selectedText = selectedOption ? selectedOption.textContent : '';
+                    copiedContent += `${outsideStringBefore.trim()} ${selectedText.trim()} ${outsideStringAfter.trim()}\n`;
+                }
+            }
+
+            if (copiedContent.trim() !== '') {
+                const textarea = document.createElement('textarea');
+                textarea.value = copiedContent;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+
+                alert('Text copied to clipboard:\n' + copiedContent);
+            } else {
+                alert('No result to copy!');
+            }
+        }
+
+
+        <!-- function copyResult() { -->
+            <!-- const textToCopy = generateText(); -->
+
+            <!-- if (textToCopy.trim() !== '') { -->
+                <!-- const textarea = document.createElement('textarea'); -->
+                <!-- textarea.value = textToCopy; -->
+                <!-- document.body.appendChild(textarea); -->
+                <!-- textarea.select(); -->
+                <!-- document.execCommand('copy'); -->
+                <!-- document.body.removeChild(textarea); -->
+
+                <!-- alert('Text copied to clipboard:\n' + textToCopy); -->
+            <!-- } else { -->
+                <!-- alert('No result to copy!'); -->
+            <!-- } -->
+        <!-- } -->
+
+
+        function generateText() {
+            const resultContainer = document.getElementById('resultContainer');
+            const selectElements = resultContainer.getElementsByTagName('select');
+            let generatedText = '';
+
+            for (const selectElement of selectElements) {
+                const id = selectElement.id;
+                const label = document.querySelector(`label[for=${id}]`).textContent;
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                const optionValue = selectedOption.value;
+
+                generatedText += `${label}: ${optionValue}\n`;
+            }
+
+            return generatedText;
+        }
+
+
+        function generateTXT() {
+            const resultContainer = document.getElementById('resultContainer');
+            const formGroups = resultContainer.getElementsByTagName('p');
+
+            if (formGroups.length > 0) {
+                let resultText = '';
+
+                for (const contentElement of formGroups) {
+                    resultText += contentElement.innerText + '\n';
+                }
+
+                const blob = new Blob([resultText], { type: 'text/plain' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'result.txt';
+                a.click();
+            } else {
+                alert('No result to generate a TXT file!');
+            }
+        }
+
+        function formatContent(content) {
+            // Add space in front of {A,B} and [specify]
+            content = content.replace(/\{(.+?)\}/g, (_, options) => {
+                const optionList = options.split(',').map(option => option.trim());
+                const select = `<select>${optionList.map(option => `<option>${option}</option>`).join('')}</select>`;
+                return ' ' + select;
+            });
+
+            content = content.replace(/\[\]/g, ' <input type="text" placeholder="specify">');
+
+            return content;
+        }
+    </script>
+</body>
+</html>
