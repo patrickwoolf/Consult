@@ -70,7 +70,325 @@
   </label>
 
   <h2>Physical Examination</h2>
-  <!-- Add more interactive elements as needed -->
+  <label>
+    Consciousness:
+    E<select id="eScore">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+    M<select id="mScore">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+    </select>
+    V<select id="vScore">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>,
+    <select id="consciousnessStatus">
+      <option value="clear">Clear</option>
+      <option value="disoriented">Disoriented</option>
+    </select>
+  </label>
+
+  <label>
+    General appearance:
+    <select id="generalAppearance">
+      <option value="fairSpirit">Fair Spirit</option>
+      <option value="illLooking">Ill Looking</option>
+    </select>
+  </label>
+
+  <h2>Speech</h2>
+  <label>
+    Speech:
+    <select id="speechFluency">
+      <option value="fluent">Fluent</option>
+      <option value="nonfluent">Nonfluent</option>
+    </select>
+    Repetition
+    <select id="repetition">
+      <option value="intact">Intact</option>
+      <option value="impaired">Impaired</option>
+    </select>
+    Comprehension
+    <select id="comprehension">
+      <option value="intact">Intact</option>
+      <option value="impaired">Impaired</option>
+    </select>
+    Dysarthria
+    <select id="dysarthria">
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+    Aphasia
+    <select id="aphasia">
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+  </label>
+
+  <h2>Swallowing</h2>
+  <label>
+    Swallowing:
+    Oral feeding
+    <select id="oralFeeding">
+      <option value="withChoking">with choking</option>
+      <option value="withoutChoking">without choking</option>
+    </select>
+    NG
+    <select id="ngTube">
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+  </label>
+
+  <h3>Clear water test (3-ml)</h3>
+  <label>
+    Swallowing reflex:
+    <select id="swallowingReflex">
+      <option value="prompt">Prompt</option>
+      <option value="mildlyDelayed">Mildly Delayed</option>
+      <option value="absent">Absent</option>
+    </select>
+  </label>
+
+  <label>
+    Laryngeal elevation:
+    <select id="laryngealElevation">
+      <option value="fair">Fair</option>
+      <option value="poor">Poor</option>
+    </select>
+  </label>
+
+  <label>
+    Choking:
+    <select id="choking">
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+    After-swallow cough:
+    <select id="afterSwallowCough">
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+  </label>
+
+  <label>
+    Wet voice:
+    <select id="wetVoice">
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+  </label>
+
+  <label>
+    Cough power:
+    <select id="coughPower">
+      <option value="functional">Functional</option>
+      <option value="impaired">Impaired</option>
+    </select>
+  </label>
+
+  <h2>Cranial Nerves</h2>
+  <label>
+    Impaired in CN:
+    <select id="impairedCranialNerves" multiple>
+      <option value="1">I</option>
+      <option value="2">II</option>
+      <option value="3">III</option>
+      <option value="4">IV</option>
+      <option value="5">V</option>
+      <option value="6">VI</option>
+      <option value="7">VII</option>
+      <option value="8">VIII</option>
+      <option value="9">IX</option>
+      <option value="10">X</option>
+      <option value="11">XI</option>
+      <option value="12">XII</option>
+    </select>
+  </label>
+
+  <h2>Motor Status</h2>
+  <label>
+    Brunnstrom stage:
+    RUE proximal
+    <select id="brunnstromRUEProximal">
+      <option value="I">I</option>
+      <option value="II">II</option>
+      <option value="III">III</option>
+      <option value="IV">IV</option>
+      <option value="V">V</option>
+    </select>
+    / RUE distal
+    <select id="brunnstromRUEDistal">
+      <option value="I">I</option>
+      <option value="II">II</option>
+      <option value="III">III</option>
+      <option value="IV">IV</option>
+      <option value="V">V</option>
+    </select>
+    / LE
+    <select id="brunnstromLE">
+      <option value="I">I</option>
+      <option value="II">II</option>
+      <option value="III">III</option>
+      <option value="IV">IV</option>
+      <option value="V">V</option>
+    </select>
+  </label>
+
+  <label>
+    Muscle power:
+    RUE proximal
+    <select id="musclePowerRUEProximal">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    / RUE distal
+    <select id="musclePowerRUEDistal">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    / LUE
+    <select id="musclePowerLUE">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    / LLE
+    <select id="musclePowerLLE">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </label>
+
+  <label>
+    DTR:
+    RUE
+    <select id="dtrRUE">
+      <option value="+">+</option>
+      <option value="++">++</option>
+      <option value="+++">+++</option>
+    </select>
+    / RLE
+    <select id="dtrRLE">
+      <option value="+">+</option>
+      <option value="++">++</option>
+      <option value="+++">+++</option>
+    </select>
+    / LUE
+    <select id="dtrLUE">
+      <option value="+">+</option>
+      <option value="++">++</option>
+      <option value="+++">+++</option>
+    </select>
+    / LLE
+    <select id="dtrLLE">
+      <option value="+">+</option>
+      <option value="++">++</option>
+      <option value="+++">+++</option>
+    </select>
+  </label>
+
+  <label>
+    Spasticity (MAS):
+    <select id="spasticity">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="1+">1+</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+  </label>
+
+  <label>
+    Sensation:
+    <select id="sensation">
+      <option value="symmetrical">Symmetrical</option>
+      <option value="RHypoesthesia">R Hypoesthesia</option>
+      <option value="LHypoesthesia">L Hypoesthesia</option>
+    </select>
+    to light touch, pain stimuli
+  </label>
+
+  <h2>Coordination</h2>
+  <label>
+    Dysmetria:
+    <select id="dysmetria">
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select>
+  </label>
+
+  <h2>Sphincter</h2>
+  <label>
+    Sphincter:
+    <select id="sphincter">
+      <option value="incontinentWithFoley">Incontinent with Foley</option>
+      <option value="withDiaper">With Diaper</option>
+      <option value="continent">Continent</option>
+    </select>
+  </label>
+
+
+  <h2>Functional Status</h2>
+  <label>
+    Bed mobility and transfer:
+    <select id="bedMobility">
+      <option value="supervision">Supervision</option>
+      <option value="contactGuard">Contact Guard</option>
+      <option value="assistance">Assistance</option>
+    </select>
+  </label>
+
+  <label>
+    Ambulation:
+    <select id="ambulationFunc">
+      <option value="withDevice">With Device</option>
+      <option value="withoutDevice">Without Device</option>
+    </select>
+    under
+    <select id="ambulationAssistanceFunc">
+      <option value="supervision">Supervision</option>
+      <option value="contactGuard">Contact Guard</option>
+      <option value="assistance">Assistance</option>
+    </select>,
+    Gait
+    <select id="gait">
+      <option value="unassessible">Unassessible</option>
+      <option value="unsteady">Unsteady</option>
+      <option value="steady">Steady</option>
+    </select>
+  </label>
+
+  <label>
+    BADLs:
+    <select id="badlsFunc">
+      <option value="totallyDependent">Totally Dependent</option>
+      <option value="partiallyDependent">Partially Dependent</option>
+      <option value="independent">Independent</option>
+    </select>
+  </label>
 
   <button onclick="copyToClipboard()">Copy to Pasteboard</button>
 </div>
@@ -98,6 +416,57 @@
     const livingEnvironment = document.getElementById('livingEnvironment').value;
     const elevator = document.getElementById('elevator').value;
 
+    const eScore = document.getElementById('eScore').value;
+    const mScore = document.getElementById('mScore').value;
+    const vScore = document.getElementById('vScore').value;
+    const consciousnessStatus = document.getElementById('consciousnessStatus').value;
+    const generalAppearance = document.getElementById('generalAppearance').value;
+    const speechFluency = document.getElementById('speechFluency').value;
+    const repetition = document.getElementById('repetition').value;
+    const comprehension = document.getElementById('comprehension').value;
+    const dysarthria = document.getElementById('dysarthria').value;
+    const aphasia = document.getElementById('aphasia').value;
+
+    const oralFeeding = document.getElementById('oralFeeding').value;
+    const ngTube = document.getElementById('ngTube').value;
+    const swallowingReflex = document.getElementById('swallowingReflex').value;
+    const laryngealElevation = document.getElementById('laryngealElevation').value;
+    const choking = document.getElementById('choking').value;
+    const afterSwallowCough = document.getElementById('afterSwallowCough').value;
+    const wetVoice = document.getElementById('wetVoice').value;
+    const coughPower = document.getElementById('coughPower').value;
+
+    const impairedCranialNerves = Array.from(document.getElementById('impairedCranialNerves').selectedOptions)
+      .map(option => option.value)
+      .join(', ');
+
+    const brunnstromRUEProximal = document.getElementById('brunnstromRUEProximal').value;
+    const brunnstromRUEDistal = document.getElementById('brunnstromRUEDistal').value;
+    const brunnstromLE = document.getElementById('brunnstromLE').value;
+
+    const musclePowerRUEProximal = document.getElementById('musclePowerRUEProximal').value;
+    const musclePowerRUEDistal = document.getElementById('musclePowerRUEDistal').value;
+    const musclePowerLUE = document.getElementById('musclePowerLUE').value;
+    const musclePowerLLE = document.getElementById('musclePowerLLE').value;
+
+    const dtrRUE = document.getElementById('dtrRUE').value;
+    const dtrRLE = document.getElementById('dtrRLE').value;
+    const dtrLUE = document.getElementById('dtrLUE').value;
+    const dtrLLE = document.getElementById('dtrLLE').value;
+
+    const spasticity = document.getElementById('spasticity').value;
+    const sensation = document.getElementById('sensation').value;
+    const dysmetria = document.getElementById('dysmetria').value;
+    const sphincter = document.getElementById('sphincter').value;
+
+    
+    const bedMobility = document.getElementById('bedMobility').value;
+    const ambulationFunc = document.getElementById('ambulationFunc').value;
+    const ambulationAssistanceFunc = document.getElementById('ambulationAssistanceFunc').value;
+    const gait = document.getElementById('gait').value;
+    const badlsFunc = document.getElementById('badlsFunc').value;
+    
+
     // Include other variables and their selected values
 
     // Example format, modify as needed
@@ -107,82 +476,38 @@ BADLs: ${badls}
 Living environment: ${livingEnvironment}F, elevator: ${elevator}
 
 [Physical Examination]
-<!-- ... (Previous code remains unchanged) ... -->
+Consciousness: E${eScore}M${mScore}V${vScore}, ${consciousnessStatus}
+General appearance: ${generalAppearance}
+Speech: ${speechFluency}, Repetition ${repetition}, Comprehension ${comprehension}, Dysarthria ${dysarthria}, Aphasia ${aphasia}
 
-<label>
-  Consciousness:
-  E<select id="eScore">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-  </select>
-  M<select id="mScore">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-  </select>
-  V<select id="vScore">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-  </select>,
-  <select id="consciousnessStatus">
-    <option value="clear">Clear</option>
-    <option value="disoriented">Disoriented</option>
-  </select>
-</label>
+Swallowing: Oral feeding ${oralFeeding} choking, NG ${ngTube}
+Clear water test (3-ml):
+- Swallowing reflex: ${swallowingReflex}
+- Laryngeal elevation: ${laryngealElevation}
+- Choking: ${choking}; after-swallow cough: ${afterSwallowCough},
+- Wet voice: ${wetVoice}
+- Cough power: ${coughPower}
 
-<label>
-  General appearance:
-  <select id="generalAppearance">
-    <option value="fairSpirit">Fair Spirit</option>
-    <option value="illLooking">Ill Looking</option>
-  </select>
-</label>]
+[Cranial Nerves]
+Impaired in CN: ${impairedCranialNerves}
 
-<h2>Speech</h2>
-<label>
-  Speech:
-  <select id="speechFluency">
-    <option value="fluent">Fluent</option>
-    <option value="nonfluent">Nonfluent</option>
-  </select>
-  Repetition
-  <select id="repetition">
-    <option value="intact">Intact</option>
-    <option value="impaired">Impaired</option>
-  </select>
-  Comprehension
-  <select id="comprehension">
-    <option value="intact">Intact</option>
-    <option value="impaired">Impaired</option>
-  </select>
-  Dysarthria
-  <select id="dysarthria">
-    <option value="+">+</option>
-    <option value="-">-</option>
-  </select>
-  Aphasia
-  <select id="aphasia">
-    <option value="+">+</option>
-    <option value="-">-</option>
-  </select>
-</label>
+[Motor Status]
+Brunnstrom stage: RUE proximal ${brunnstromRUEProximal} / RUE distal ${brunnstromRUEDistal} / LE ${brunnstromLE}
+Muscle power: RUE proximal ${musclePowerRUEProximal} / RUE distal ${musclePowerRUEDistal} / LUE ${musclePowerLUE} / LLE ${musclePowerLLE}
+DTR: RUE ${dtrRUE} / RLE ${dtrRLE} / LUE ${dtrLUE} / LLE ${dtrLLE}
+Spasticity (MAS): ${spasticity}
+Sensation: ${sensation} to light touch, pain stimuli
 
-<!-- Add other sections similarly -->
+[Coordination]
+Dysmetria: ${dysmetria}
 
-<!-- ... (Previous code remains unchanged) ... -->
-
-
+[Sphincter]
+Sphincter: ${sphincter}
 
 [Functional Status]
-// Add other sections`;
+- Bed mobility and transfer: ${bedMobility};
+- Ambulation: ${ambulationFunc} under ${ambulationAssistanceFunc}, Gait ${gait}
+- BADLs: ${badlsFunc}`
   }
 </script>
 
