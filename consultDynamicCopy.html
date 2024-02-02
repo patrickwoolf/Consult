@@ -111,13 +111,13 @@ function generateResult() {
     resultContainer.innerHTML = ''; // Clear previous content
     let selectCounter = 0;
 
-    const contentFragment = document.createDocumentFragment(); // Create a single DocumentFragment for all content
-
     for (const formGroup of formGroups) {
         const userInput = formGroup.querySelector('input').value;
         const regex = /\{([^}]+)\}/g;
         let match;
         let lastIndex = 0;
+
+        const contentFragment = document.createDocumentFragment(); // Create a DocumentFragment for each form group
 
         while ((match = regex.exec(userInput)) !== null) {
             contentFragment.appendChild(document.createTextNode(userInput.substring(lastIndex, match.index)));
@@ -139,13 +139,12 @@ function generateResult() {
         if (lastIndex < userInput.length) {
             contentFragment.appendChild(document.createTextNode(userInput.substring(lastIndex)));
         }
+
+        const contentElement = document.createElement('p');
+        contentElement.appendChild(contentFragment);
+        resultContainer.appendChild(contentElement);
     }
-
-    const contentElement = document.createElement('p');
-    contentElement.appendChild(contentFragment);
-    resultContainer.appendChild(contentElement);
 }
-
 
 
         <!-- function generateResult() { -->
