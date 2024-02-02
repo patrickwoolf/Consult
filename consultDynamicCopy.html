@@ -8,23 +8,66 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
         }
 
         label {
             display: block;
             font-weight: bold;
+            margin-bottom: 8px;
         }
 
-        select, input {
-            margin-top: 5px;
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
         }
 
         #resultContainer {
             margin-top: 20px;
+            text-align: left;
+        }
+
+        p {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -75,44 +118,55 @@
             for (const formGroup of formGroups) {
                 const userInput = formGroup.querySelector('input').value;
 
-                // Regex to match content like "{a,b}" and capture the options inside the curly braces
-                const matches = userInput.match(/(.*)\{(.+?)\}(.*)/);
+                // Regex to match content like "{m o, m n}" and capture the options inside the curly braces
+                const regex = /\{([^}]+)\}/g;
+                let match;
 
-                if (matches) {
-                    const outsideStringBefore = matches[1];
-                    const options = matches[2].split(',').map(option => option.trim());
-                    const outsideStringAfter = matches[3];
+                // Create a new DocumentFragment to hold the formatted content
+                const contentFragment = document.createDocumentFragment();
+
+                // Index to track the starting position of the next match
+                let lastIndex = 0;
+
+                while ((match = regex.exec(userInput)) !== null) {
+                    // Add content before the match
+                    contentFragment.appendChild(document.createTextNode(userInput.substring(lastIndex, match.index)));
 
                     // Create a new select element
                     const selectElement = document.createElement('select');
-                    
+
                     // Set the unique ID for each select element
                     selectElement.id = 'select' + selectCounter++;
 
+                    // Get the options inside the curly braces
+                    const options = match[1].split(',').map(option => option.trim());
+
+                    // Create option elements and append them to the select element
                     for (const option of options) {
-                        // Create option elements and set the text content
                         const optionElement = document.createElement('option');
                         optionElement.textContent = option;
-
-                        // Set the ID attribute for each option
-                        optionElement.id = option.replace(/\s+/g, ' '); // Remove spaces and set as id
-
-                        // Append the option element to the select element
+                        optionElement.id = selectElement.id + '_' + option.replace(/\s+/g, '_');
                         selectElement.appendChild(optionElement);
                     }
 
-                    // Generate formatted content with the select element and outside strings
-                    const formattedContent = `${outsideStringBefore} ${selectElement.outerHTML} ${outsideStringAfter}`;
+                    // Append the select element to the DocumentFragment
+                    contentFragment.appendChild(selectElement);
 
-                    // Create a new paragraph element
-                    const contentElement = document.createElement('p');
-
-                    // Set the inner HTML of the paragraph element with the formatted content
-                    contentElement.innerHTML = formattedContent;
-
-                    // Append the paragraph element to the result container
-                    resultContainer.appendChild(contentElement);
+                    // Update the lastIndex to the end of the current match
+                    lastIndex = regex.lastIndex;
                 }
+
+                // Add content after the last match if it's not the end of the string
+                if (lastIndex < userInput.length) {
+                    contentFragment.appendChild(document.createTextNode(userInput.substring(lastIndex)));
+                }
+
+                // Create a new paragraph element and append the DocumentFragment to it
+                const contentElement = document.createElement('p');
+                contentElement.appendChild(contentFragment);
+
+                // Append the paragraph element to the result container
+                resultContainer.appendChild(contentElement);
             }
         }
 
