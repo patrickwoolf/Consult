@@ -104,71 +104,47 @@
             dynamicContent.appendChild(formGroup);
         }
 
-        function generateResult() {
-            const dynamicContent = document.getElementById('dynamicContent');
-            const formGroups = dynamicContent.getElementsByClassName('form-group');
+function generateResult() {
+    const dynamicContent = document.getElementById('dynamicContent');
+    const formGroups = dynamicContent.getElementsByClassName('form-group');
+    const resultContainer = document.getElementById('resultContainer');
+    resultContainer.innerHTML = ''; // Clear previous content
+    let selectCounter = 0;
 
-            const resultContainer = document.getElementById('resultContainer');
+    const contentFragment = document.createDocumentFragment(); // Create a single DocumentFragment for all content
 
-            // Clear previous content
-            resultContainer.innerHTML = '';
+    for (const formGroup of formGroups) {
+        const userInput = formGroup.querySelector('input').value;
+        const regex = /\{([^}]+)\}/g;
+        let match;
+        let lastIndex = 0;
 
-            let selectCounter = 0; // Counter to ensure unique select IDs
+        while ((match = regex.exec(userInput)) !== null) {
+            contentFragment.appendChild(document.createTextNode(userInput.substring(lastIndex, match.index)));
+            const selectElement = document.createElement('select');
+            selectElement.id = 'select' + selectCounter++;
+            const options = match[1].split(',').map(option => option.trim());
 
-            for (const formGroup of formGroups) {
-                const userInput = formGroup.querySelector('input').value;
-
-                // Regex to match content like "{m o, m n}" and capture the options inside the curly braces
-                const regex = /\{([^}]+)\}/g;
-                let match;
-
-                // Create a new DocumentFragment to hold the formatted content
-                const contentFragment = document.createDocumentFragment();
-
-                // Index to track the starting position of the next match
-                let lastIndex = 0;
-
-                while ((match = regex.exec(userInput)) !== null) {
-                    // Add content before the match
-                    contentFragment.appendChild(document.createTextNode(userInput.substring(lastIndex, match.index)));
-
-                    // Create a new select element
-                    const selectElement = document.createElement('select');
-
-                    // Set the unique ID for each select element
-                    selectElement.id = 'select' + selectCounter++;
-
-                    // Get the options inside the curly braces
-                    const options = match[1].split(',').map(option => option.trim());
-
-                    // Create option elements and append them to the select element
-                    for (const option of options) {
-                        const optionElement = document.createElement('option');
-                        optionElement.textContent = option;
-                        optionElement.id = selectElement.id + '_' + option.replace(/\s+/g, '_');
-                        selectElement.appendChild(optionElement);
-                    }
-
-                    // Append the select element to the DocumentFragment
-                    contentFragment.appendChild(selectElement);
-
-                    // Update the lastIndex to the end of the current match
-                    lastIndex = regex.lastIndex;
-                }
-
-                // Add content after the last match if it's not the end of the string
-                if (lastIndex < userInput.length) {
-                    contentFragment.appendChild(document.createTextNode(userInput.substring(lastIndex)));
-                }
-
-                // Create a new paragraph element and append the DocumentFragment to it
-                const contentElement = document.createElement('p');
-                contentElement.appendChild(contentFragment);
-
-                // Append the paragraph element to the result container
-                resultContainer.appendChild(contentElement);
+            for (const option of options) {
+                const optionElement = document.createElement('option');
+                optionElement.textContent = option;
+                optionElement.id = option.replace(/\s+/g, '_');
+                selectElement.appendChild(optionElement);
             }
+
+            contentFragment.appendChild(selectElement);
+            lastIndex = regex.lastIndex;
         }
+
+        if (lastIndex < userInput.length) {
+            contentFragment.appendChild(document.createTextNode(userInput.substring(lastIndex)));
+        }
+    }
+
+    const contentElement = document.createElement('p');
+    contentElement.appendChild(contentFragment);
+    resultContainer.appendChild(contentElement);
+}
 
 
 
@@ -242,36 +218,45 @@
             <!-- } -->
         <!-- } -->
 
-        function copyResult() {
-            const resultContainer = document.getElementById('resultContainer');
-            const paragraphs = resultContainer.getElementsByTagName('p');
-            let copiedContent = '';
+function copyResult() {
+    const resultContainer = document.getElementById('resultContainer');
+    const paragraphs = resultContainer.getElementsByTagName('p');
+    let copiedContent = '';
 
-            for (const paragraph of paragraphs) {
-                const outsideStringBefore = paragraph.firstChild.nodeValue; // Get the text before the <select>
-                const selectElement = paragraph.querySelector('select');
-                const outsideStringAfter = paragraph.lastChild.nodeValue; // Get the text after the <select>
+    for (const paragraph of paragraphs) {
+        let formattedLine = '';
+        let currentNode = paragraph.firstChild;
 
-                if (selectElement) {
-                    const selectedOption = selectElement.options[selectElement.selectedIndex];
-                    const selectedText = selectedOption ? selectedOption.textContent : '';
-                    copiedContent += `${outsideStringBefore.trim()} ${selectedText.trim()} ${outsideStringAfter.trim()}\n`;
-                }
+        while (currentNode) {
+            if (currentNode.nodeType === Node.TEXT_NODE) {
+                formattedLine += currentNode.nodeValue;
+            } else if (currentNode.tagName === 'SELECT') {
+                const selectedOption = currentNode.options[currentNode.selectedIndex];
+                const selectedText = selectedOption ? selectedOption.textContent : '';
+                formattedLine += selectedText.trim();
             }
 
-            if (copiedContent.trim() !== '') {
-                const textarea = document.createElement('textarea');
-                textarea.value = copiedContent;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-
-                alert('Text copied to clipboard:\n' + copiedContent);
-            } else {
-                alert('No result to copy!');
-            }
+            currentNode = currentNode.nextSibling;
         }
+
+        copiedContent += formattedLine.trim() + '\n';
+    }
+
+    if (copiedContent.trim() !== '') {
+        const textarea = document.createElement('textarea');
+        textarea.value = copiedContent;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        alert('Formatted Text copied to clipboard:\n' + copiedContent);
+    } else {
+        alert('No result to copy!');
+    }
+}
+
+
 
 
         <!-- function copyResult() { -->
